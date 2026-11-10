@@ -35,7 +35,8 @@
                         <td th:text="${tx.toAccount}"></td>
                         <td th:text="${tx.amount}"></td>
                         <td>
-                            <span th:class="${tx.name() == 'SUCCESS'} ? 'badge bg-success' : 'badge bg-danger'" th:text="${tx.status}"></span>
+                            <!-- මෙහි තිබූ tx.name() යන්න tx.status.name() ලෙස නිවැරදි කර ඇත -->
+                            <span th:class="${tx.status.name() == 'SUCCESS'} ? 'badge bg-success' : 'badge bg-danger'" th:text="${tx.status}"></span>
                         </td>
                         <td th:text="${#temporals.format(tx.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     </tr>
