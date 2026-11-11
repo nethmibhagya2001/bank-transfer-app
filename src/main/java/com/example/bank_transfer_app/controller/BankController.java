@@ -54,7 +54,7 @@ public class BankController {
     }
 
     @PostMapping("/transfer")
-    public String transfer(@Valid @ModelAttribute("transferRequest") TransferRequest request,BindingResult bindingResult,RedirectAttributes redirectAttributes) {
+    public String transfer(@Valid @ModelAttribute("transferRequest") TransferRequest request, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Validation error in transfer form.");
             return "redirect:/";
