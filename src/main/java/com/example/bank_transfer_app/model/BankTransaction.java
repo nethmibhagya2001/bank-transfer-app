@@ -34,4 +34,11 @@ public class BankTransaction {
 
     @Column(nullable = false)
     private LocalDateTime timestamp;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type")
+    private TransactionType transactionType;
+
+    @Column(precision = 14, scale = 2)
+    private BigDecimal fee;
 }
