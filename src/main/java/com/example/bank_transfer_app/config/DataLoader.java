@@ -2,6 +2,7 @@ package com.example.bank_transfer_app.config;
 
 import com.example.bank_transfer_app.model.Customer;
 import com.example.bank_transfer_app.repository.CustomerRepository;
+import com.example.bank_transfer_app.service.BankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,14 @@ public class DataLoader implements CommandLineRunner {
             customerRepository.save(c3);
 
             System.out.println(">>> Sample data loaded successfully! Total bank money: LKR 85,000.00 <<<");
+        }
+
+        if (customerRepository.findByAccountNumber(BankService.BANK_FEE_ACCOUNT).isEmpty()) {
+            Customer bankFeeAccount = new Customer();
+            bankFeeAccount.setAccountNumber(BankService.BANK_FEE_ACCOUNT);
+            bankFeeAccount.setFullName("Bank Fee Account");
+            bankFeeAccount.setBalance(BigDecimal.ZERO);
+            customerRepository.save(bankFeeAccount);
         }
     }
 }

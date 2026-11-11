@@ -13,6 +13,10 @@
     </div>
 
     <div class="card shadow-sm">
+        <div class="card-body border-bottom">
+            <strong>Total amount sent in successful transfers:</strong>
+            LKR <span th:text="${totalSent}">0.00</span>
+        </div>
         <div class="card-body table-responsive">
             <table class="table table-striped align-middle">
                 <thead>
@@ -21,19 +25,23 @@
                         <th>Sender Account</th>
                         <th>Receiver Account</th>
                         <th>Amount (LKR)</th>
+                        <th>Fee (LKR)</th>
+                        <th>Type</th>
                         <th>Status</th>
                         <th>Timestamp</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:if="${#lists.isEmpty(history)}">
-                        <td colspan="6" class="text-center text-muted">No transactions found for this account.</td>
+                        <td colspan="8" class="text-center text-muted">No transactions found for this account.</td>
                     </tr>
                     <tr th:each="tx : ${history}">
                         <td th:text="${tx.id}"></td>
                         <td th:text="${tx.fromAccount}"></td>
                         <td th:text="${tx.toAccount}"></td>
                         <td th:text="${tx.amount}"></td>
+                        <td th:text="${tx.fee != null ? tx.fee : '0.00'}"></td>
+                        <td th:text="${tx.transactionType != null ? tx.transactionType : 'TRANSFER'}"></td>
                         <td>
                             <span th:class="${tx.status.name() == 'SUCCESS'} ? 'badge bg-success' : 'badge bg-danger'" th:text="${tx.status}"></span>
                         </td>

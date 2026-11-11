@@ -23,6 +23,24 @@ class BankTransferAppApplicationTests {
 		mockMvc.perform(get("/"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith("text/html"))
-				.andExpect(content().string(containsString("Bank Transfer Management System")));
+				.andExpect(content().string(containsString("Bank Transfer Management System")))
+				.andExpect(content().string(containsString("Deposit")))
+				.andExpect(content().string(containsString("Withdraw")));
+	}
+
+	@Test
+	void largeTransfersPageRenders() throws Exception {
+		mockMvc.perform(get("/large-transfers").param("min", "10000"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith("text/html"))
+				.andExpect(content().string(containsString("Large Transfers")));
+	}
+
+	@Test
+	void accountHistoryShowsTotalSent() throws Exception {
+		mockMvc.perform(get("/accounts/100001/history"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith("text/html"))
+				.andExpect(content().string(containsString("Total amount sent in successful transfers")));
 	}
 }

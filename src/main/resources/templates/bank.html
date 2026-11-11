@@ -9,6 +9,9 @@
 <div class="container py-5">
     
     <h1 class="mb-4 text-center text-primary fw-bold">🏦 Bank Transfer Management System</h1>
+    <div class="text-center mb-4">
+        <a th:href="@{/large-transfers(min=10000)}" class="btn btn-outline-primary">View transfers above LKR 10,000</a>
+    </div>
 
     <!-- Flash Messages -->
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -69,6 +72,44 @@
                             <label class="form-check-label text-danger fw-semibold" for="simulateFailure">Simulate System Failure (Rollback Test)</label>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Transfer Money</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Deposit</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/deposit}" th:object="${depositRequest}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Account Number</label>
+                            <input type="text" class="form-control" th:field="*&#123;accountNumber&#125;" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount (LKR)</label>
+                            <input type="number" min="0.01" step="0.01" class="form-control" th:field="*&#123;amount&#125;" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Deposit</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">Withdraw</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/withdraw}" th:object="${withdrawalRequest}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Account Number</label>
+                            <input type="text" class="form-control" th:field="*&#123;accountNumber&#125;" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount (LKR)</label>
+                            <input type="number" min="0.01" step="0.01" class="form-control" th:field="*&#123;amount&#125;" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Withdraw</button>
                     </form>
                 </div>
             </div>
@@ -146,6 +187,7 @@
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Amount</th>
+                                <th>Fee</th>
                                 <th>Status</th>
                                 <th>Time</th>
                             </tr>
@@ -156,6 +198,7 @@
                                 <td th:text="${t.fromAccount}"></td>
                                 <td th:text="${t.toAccount}"></td>
                                 <td th:text="${t.amount}"></td>
+                                <td th:text="${t.fee != null ? t.fee : '0.00'}"></td>
                                 <td>
                                     <span th:class="${t.status.name() == 'SUCCESS'} ? 'badge bg-success' : 'badge bg-danger'" th:text="${t.status}"></span>
                                 </td>
